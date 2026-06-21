@@ -1,104 +1,196 @@
-#  Containerize Flask + MySQL Two-Tier App with Docker
+# 📦 Production-Ready AWS & Docker 2-Tier Application Infrastructure
 
-This is a simple Flask application that connects to a MySQL database using Docker.
+![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=flat\&logo=amazon-aws\&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=flat\&logo=docker\&logoColor=white)
+![Flask](https://img.shields.io/badge/flask-%23000.svg?style=flat\&logo=flask\&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=flat\&logo=mysql\&logoColor=white)
 
-## Features
-- Flask web application
-- MySQL database container
-- Custom Docker network
-- Persistent MySQL data using Docker volume
+This project demonstrates a **production-inspired two-tier architecture** for deploying a containerized **Flask application with MySQL on AWS**. The application runs inside Docker containers on private EC2 instances behind an Application Load Balancer (ALB) and uses Amazon ECR, VPC Endpoints, CloudWatch, and AWS Systems Manager (SSM) for secure management and monitoring.
 
-## Project Structure
+---
 
-project-folder/
-  -templates/
-    index.html
-  -app.py
-  -Dockerfile
-  -message.sql
-  -README.md
-  -requirements.txt
-  -docker-compose.yml # NEW: Docker Compose configuration
+## 📌 Project Overview
 
+This project implements a secure and highly available cloud infrastructure following AWS best practices.
 
-## Prerequisites
-Make sure you have the following installed:
-- Docker
-- docker compose
-- Git (optional, for cloning the repository)
+* **Air-Gapped Private Network** – Application and database reside inside private subnets.
+* **Zero SSH Architecture** – AWS Systems Manager Session Manager replaces SSH access.
+* **Private AWS Connectivity** – VPC Endpoints keep traffic off the public internet.
+* **Production-Inspired Design** – Mimics real-world DevOps and cloud environments.
 
-## Build the Flask Image
+---
 
-docker build -t myapp .
+## 🏗️ Architecture Diagram
 
+![AWS Architecture](architecture/final-architecture.png)
 
-## Create a Custom Network
+---
 
-docker network create two-tier
+## ⚡ Features
 
+### Local Development
 
-## Create a Volume for MySQL Data
+* Containerized Flask application and MySQL database
+* Docker Compose environment
+* Persistent Docker volumes
+* Custom Docker bridge network
 
-docker volume create mysql-data
+### Cloud Infrastructure
 
+* Multi-AZ architecture
+* Application Load Balancer
+* Private EC2 instances
+* Amazon ECR integration
+* VPC Endpoints
+* IAM Roles
+* CloudWatch monitoring
+* AWS Systems Manager
 
-## Run MySQL Container
+### DevOps & Operations
 
- docker run -d --name mysql --network two-tier -v mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
+* Docker-based deployment workflow
+* Centralized logging
+* Network isolation
+* Production-inspired AWS architecture
 
+---
 
-## Run Flask Container
-docker run -d --name mysql --network two-tier -v mysql-data:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=devops mysql
+## 📁 Folder Structure
 
-## Access the App
-Open your browser and go to:
+```text
+aws-dockerized-flask-mysql-2tier-app/
+├── app/
+├── docker/
+├── aws/
+├── scripts/
+├── monitoring/
+├── screenshots/
+├── architecture/
+├── docs/
+├── .github/workflows/
+└── README.md
+```
 
-http://localhost:5000
+## 🛠 Technology Stack
 
+| Layer                  | Technology                    |
+| ---------------------- | ----------------------------- |
+| Frontend               | HTML                          |
+| Backend                | Flask                         |
+| Database               | MySQL                         |
+| Containerization       | Docker                        |
+| Cloud Platform         | AWS                           |
+| Compute                | Amazon EC2                    |
+| Load Balancing         | Application Load Balancer     |
+| Container Registry     | Amazon ECR                    |
+| Monitoring             | Amazon CloudWatch             |
+| Instance Management    | AWS Systems Manager           |
+| Networking             | VPC, Public & Private Subnets |
+| Security               | IAM Roles, Security Groups    |
+| Private Service Access | VPC Endpoints                 |
+| Operating System       | Ubuntu Linux                  |
+| Version Control        | Git & GitHub                  |
 
-## Stop the Containers
+---
 
-docker stop <cont_id> && docker rm <cont_id>
+## 🔄 Architecture Flow
 
-## Remove Network and Volume
+```text
+Users
+   ↓
+Application Load Balancer
+   ↓
+Target Group
+   ↓
+EC2 Instance (Docker Flask App)
+   ↓
+MySQL Database
+   ↓
+CloudWatch + Systems Manager
+```
 
-docker network rm two-tier
-docker volume rm mysql-data
+---
 
-## Quick Start with Docker Compose(NEW: Docker Compose configuration)
+## 🚀 AWS Deployment Steps
 
-### 1. Build and Run All Containers
+1. Create VPC
+2. Create Public and Private Subnets
+3. Create Internet Gateway
+4. Create NAT Gateway
+5. Launch EC2 Instances
+6. Configure Security Groups
+7. Push Docker Image to Amazon ECR
+8. Create Target Group
+9. Create Application Load Balancer
+10. Verify Application
 
-docker compose up 
-  or
-docker compose up -d (for dettached mode)
+---
 
-This will:
-- Build the Flask image automatically
-- Create the MySQL container with data volume
-- Set up the custom network
-- Start both containers together
+## 📊 Monitoring and Logging
 
-### 2. Access the App
+* Amazon CloudWatch Metrics
+* CloudWatch Logs
+* CloudWatch Alarms
+* AWS Systems Manager Session Manager
+* Run Command
+* Automation
 
-Open your browser and go to:
-http://localhost:5000
+---
 
-### 3. Stop the Containers
+## 🔐 Security Features
 
-docker compose down
+* Private EC2 instances
+* IAM Roles
+* Security Groups
+* VPC Endpoints
+* Systems Manager instead of SSH
+* NAT Gateway for outbound internet access
 
-This stops and removes:
-- All containers
-- Networks created by compose
+---
 
-### 4. Remove Everything (including volume)
+## 🚀 Future Enhancements
 
-docker compose down --volumes
+* Terraform Infrastructure as Code
+* GitHub Actions CI/CD
+* Auto Scaling Group
+* Amazon RDS MySQL
+* HTTPS with ACM
+* Route 53
+* Prometheus Monitoring
+* Grafana Dashboard
+* Kubernetes Deployment
 
-## Notes
-- Use `MYSQL_HOST=mysql` because container names are used for service communication inside the same Docker network.
-- The MySQL container stores data in a volume, so data remains even after container restart.
-- If Flask cannot connect to MySQL, check if both containers are on the same network.
-- Docker Compose automatically waits for MySQL to be ready before starting the Flask app (using `depends_on`)
+---
 
+## 📚 Learning Outcomes
+
+* Docker Containerization
+* Docker Compose
+* AWS Networking
+* EC2 and Security Groups
+* Amazon ECR
+* Application Load Balancer
+* CloudWatch Monitoring
+* AWS Systems Manager
+* IAM Roles and Permissions
+
+---
+
+## 👨‍💻 Author
+
+**Sagar Urade**
+Aspiring DevOps & Cloud Engineer
+
+GitHub: https://github.com/SagarUrade
+
+---
+
+## 🤝 Contributor
+
+**Shilpa Biswas**
+
+GitHub: https://github.com/shilpa01b
+
+---
+
+⭐ If you found this project useful, consider giving it a star.
