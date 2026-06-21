@@ -96,18 +96,9 @@ This stops and removes:
 
 docker compose down --volumes
 
-## Push image to Docker Hub
-
-The Flask app image is built locally and pushed to Docker Hub as
-'''
-shilpabiswas09/two-tier-app:latest
-'''
- so it can be pulled and run through Docker Compose on any machine.
-
 ## Notes
 - Use `MYSQL_HOST=mysql` because container names are used for service communication inside the same Docker network.
 - The MySQL container stores data in a volume, so data remains even after container restart.
 - If Flask cannot connect to MySQL, check if both containers are on the same network.
 - Docker Compose automatically waits for MySQL to be ready before starting the Flask app (using `depends_on`)
-- To view logs: docker compose logs or 
 
