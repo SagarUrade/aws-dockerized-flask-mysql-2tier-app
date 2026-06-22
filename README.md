@@ -22,7 +22,7 @@ This project implements a secure and highly available cloud infrastructure follo
 
 ## 🏗️ Architecture Diagram
 
-![AWS Architecture](architecture/final-architecture.png)
+![AWS Architecture](architecture/architecture-drawio.gif)
 
 ---
 
